@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
-const signup = require("./routes/signUps");
-const login = require("./routes/logins");
+const signupUser = require("./routes/User/signUpUser");
+const loginUser = require("./routes/User/loginUser");
+const updateUser = require("./routes/User/updateUser");
+const deleteUser = require("./routes/User/deleteUser");
 const express = require("express");
 const app = express();
 
@@ -10,8 +12,11 @@ mongoose
   .catch((err) => console.error("Could not connect to MongoDB..."));
 
 app.use(express.json());
-app.use("/api/login", login);
-app.use("/api/sign-up", signup);
+app.use("/api/login", loginUser);
+app.use("/api/sign-up", signupUser);
+
+app.use("/api/update-user-details", updateUser);
+app.use("/api/remove-account", deleteUser);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
