@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
     res.send(user);
   } else {
-    res.status("Confirm Password should be same as Password");
+    res.status(500).send("Confirm Password should be same as Password");
   }
 });
 

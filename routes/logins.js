@@ -9,7 +9,6 @@ router.get("/", async (req, res) => {
   if (user) {
     res.send(user);
   }
-  res.redirect("/sign-up");
 });
 
 module.exports = router;
