@@ -1,16 +1,19 @@
-const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const signup = require("./routes/signUps");
+const login = require("./routes/logins");
+const express = require("express");
 const app = express();
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-PORT = 3000;
-mongoose.connect("mongodb://localhost:27017/myunicallingDB", {
-  useNewUrlParser: true,
-});
-app.post("/sign-up", (req, res) => {});
 
-app.listen(PORT, () => {
-  console.log(`MYUNICALLING app listening on port ${PORT}`);
+mongoose
+  .connect("mongodb://127.0.0.1:27017/myunicallingDB")
+  .then(() => console.log("Connected to MongoDB..."))
+  .catch((err) => console.error("Could not connect to MongoDB..."));
+
+app.use(express.json());
+app.use("/api/login", login);
+app.use("/api/sign-up", signup);
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`MYUNICALLING app listening on port ${port}`);
 });
