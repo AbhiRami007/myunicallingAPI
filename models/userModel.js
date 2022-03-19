@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const mongoose = require("mongoose");
 
 const User = mongoose.model(
@@ -21,6 +22,10 @@ const User = mongoose.model(
       type: String,
       required: true,
       minlength: 8,
+    },
+    userRole: {
+      type: String,
+      required: true,
     },
   })
 );

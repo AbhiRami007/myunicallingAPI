@@ -4,8 +4,12 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const user = await User.findOne({ email: req.query.email });
-  if (user) {
+  const user = await User.findOne({ email: req.body.email });
+  if (
+    user &&
+    user.email == req.body.email &&
+    user.password == req.body.password
+  ) {
     const userPayload = {
       name: user.name,
       email: user.email,
@@ -25,13 +29,14 @@ router.post("/", async (req, res) => {
       maxAge: 900000,
     });
 
-    res.status(200).json({
+    res.status(200).send({
+      message: "Logged in successfully",
       token: "Bearer " + token,
       refreshToken: refreshToken,
       user: user,
     });
   } else {
-    res.status(401).json({ message: "invalid credentials!" });
+    res.status(401).send({ message: "invalid credentials!" });
   }
 });
 

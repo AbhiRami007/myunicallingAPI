@@ -6,6 +6,7 @@ function validateUser(user) {
     phone: Joi.number().required(),
     password: Joi.string().min(8).required(),
     confirmPassword: Joi.string().required(),
+    userRole: Joi.string().required(),
   });
 
   return schema.validate(user);
