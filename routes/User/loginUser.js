@@ -14,6 +14,7 @@ router.post("/", async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      userRole: user.userRole,
     };
     const token = jwt.sign(userPayload, "SECRET", {
       expiresIn: "2 days",
@@ -33,7 +34,7 @@ router.post("/", async (req, res) => {
       message: "Logged in successfully",
       token: "Bearer " + token,
       refreshToken: refreshToken,
-      user: user,
+      user: userPayload,
     });
   } else {
     res.status(401).send({ message: "invalid credentials!" });
