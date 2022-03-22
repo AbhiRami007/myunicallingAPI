@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
       user: userPayload,
     });
   } else {
-    res.status(401).send({ message: "invalid credentials!" });
+    res.status(401).send("invalid credentials!");
   }
 });
 
