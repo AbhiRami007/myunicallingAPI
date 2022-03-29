@@ -12,6 +12,7 @@ const saveUniversity = require("./routes/UniversityDetails/saveUniversities");
 const getUniversity = require("./routes/UniversityDetails/getUniversityDetails");
 var cors = require("cors");
 const express = require("express");
+var cors = require("cors");
 const app = express();
 app.use(cors());
 
@@ -30,7 +31,7 @@ app.use("/sign-up", signupUser);
 
 app.use("/update-user-details", updateUser);
 app.use("/remove-account", deleteUser);
-app.use("/", fileUpload);
+app.use("/upload", fileUpload);
 app.use("/file-download", fileDownload);
 app.use("/logo", universityLogo);
 app.use("/brochure-upload", universityBrochureUpload);
