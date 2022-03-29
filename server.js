@@ -11,7 +11,9 @@ const universityBrochureDownload = require("./routes/FileUploadDownload/universi
 const saveUniversity = require("./routes/UniversityDetails/saveUniversities");
 const getUniversity = require("./routes/UniversityDetails/getUniversityDetails");
 const express = require("express");
+var cors = require("cors");
 const app = express();
+app.use(cors());
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
@@ -27,7 +29,7 @@ app.use("/sign-up", signupUser);
 
 app.use("/update-user-details", updateUser);
 app.use("/remove-account", deleteUser);
-app.use("/", fileUpload);
+app.use("/upload", fileUpload);
 app.use("/file-download", fileDownload);
 app.use("/logo", universityLogo);
 app.use("/brochure-upload", universityBrochureUpload);

@@ -31,10 +31,7 @@ const storage = new gridFs.GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.get("/", (req, res) => {
-  res.render("index");
-});
-router.post("/upload", upload.single("file"), (req, res) => {
+router.post("/document-upload", upload.single("file"), (req, res) => {
   let gfs;
   mongoose.connection.once("open", () => {
     gfs = grid(mongoose.connection.db, mongoose.mongo);
