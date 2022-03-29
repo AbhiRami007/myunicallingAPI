@@ -22,14 +22,14 @@ router.get("/download", async (req, res) => {
     const gridfsBucket = new mongoose.mongo.GridFSBucket(
       mongoose.connection.db,
       {
-        bucketName: `university-brochure-${req.query.university_name}`,
+        bucketName: `university-brochure`,
       }
     );
 
     gfs = Grid(connection.db, mongoose.mongo);
 
     gfs
-      .collection(`university-brochure-${req.query.university_name}`)
+      .collection(`university-brochure`)
       .findOne({ _id: mongodb.ObjectId(id) }, (err, file) => {
         if (err) {
           res.status(404).send("File Not Found!");

@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const gridFs = require("multer-gridfs-storage");
 const grid = require("gridfs-stream");
-
 const router = express.Router();
 
 const storage = new gridFs.GridFsStorage({

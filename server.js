@@ -10,8 +10,11 @@ const universityBrochureUpload = require("./routes/FileUploadDownload/university
 const universityBrochureDownload = require("./routes/FileUploadDownload/university-brochure-download");
 const saveUniversity = require("./routes/UniversityDetails/saveUniversities");
 const getUniversity = require("./routes/UniversityDetails/getUniversityDetails");
+var cors = require("cors");
 const express = require("express");
 const app = express();
+app.use(cors());
+
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 

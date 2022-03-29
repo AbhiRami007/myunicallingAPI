@@ -2,7 +2,6 @@ const mongodb = require("mongodb");
 const express = require("express");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
-const { User } = require("../../models/userModel");
 const router = express.Router();
 eval(
   `Grid.prototype.findOne = ${Grid.prototype.findOne
@@ -14,9 +13,6 @@ const connection = mongoose.connection;
 
 router.get("/", async (req, res) => {
   if (req.query.email) {
-    const user = await User.findOne({ metadata: { user: req.query.email } });
-    var id = user._id;
-
     const gridfsBucket = new mongoose.mongo.GridFSBucket(
       mongoose.connection.db,
       {
@@ -25,7 +21,11 @@ router.get("/", async (req, res) => {
     );
 
     gfs = Grid(connection.db, mongoose.mongo);
-
+    const documents = await gfs.collection(`student-documents`).find({
+      "metadata.user": req.query.user,
+      "metadata.type": req.query.type,
+    });
+    var id = mongodb.ObjectId(documents._id);
     gfs
       .collection(`student-documents`)
       .findOne({ _id: mongodb.ObjectId(id) }, (err, file) => {
