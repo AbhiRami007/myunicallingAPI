@@ -18,7 +18,9 @@ const storage = new gridFs.GridFsStorage({
         }
         const filename = buff.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
-          user: req.body.email,
+          metadata: {
+            user: req.body.email,
+          },
           filename: filename,
           bucketName: `uploads-${req.body.email}`,
         };
@@ -29,7 +31,7 @@ const storage = new gridFs.GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.get("/file", (req, res) => {
+router.get("/", (req, res) => {
   res.render("index");
 });
 router.post("/upload", upload.single("file"), (req, res) => {

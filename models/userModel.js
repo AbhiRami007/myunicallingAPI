@@ -26,6 +26,9 @@ const User = mongoose.model(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+    },
   })
 );
 

@@ -24,6 +24,7 @@ function validateUser(user) {
     }),
     confirmPassword: Joi.string().required(),
     userRole: Joi.string().required(),
+    isVerfied: Joi.boolean().optional(),
   });
 
   return schema.validate(user);
