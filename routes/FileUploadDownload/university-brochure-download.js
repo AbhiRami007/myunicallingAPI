@@ -2,6 +2,7 @@ const mongodb = require("mongodb");
 const express = require("express");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
+const { University } = require("../../models/universityModel");
 const router = express.Router();
 eval(
   `Grid.prototype.findOne = ${Grid.prototype.findOne
@@ -13,7 +14,10 @@ const connection = mongoose.connection;
 
 router.get("/download", async (req, res) => {
   if (req.query.university_name) {
-    var id = "6234702d65800a8ba08d08f8";
+    const university = await University.findOne({
+      metadata: { university: req.query.university_name },
+    });
+    var id = university._id;
 
     const gridfsBucket = new mongoose.mongo.GridFSBucket(
       mongoose.connection.db,

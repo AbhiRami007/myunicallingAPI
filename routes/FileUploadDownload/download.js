@@ -2,6 +2,7 @@ const mongodb = require("mongodb");
 const express = require("express");
 const mongoose = require("mongoose");
 const Grid = require("gridfs-stream");
+const { User } = require("../../models/userModel");
 const router = express.Router();
 eval(
   `Grid.prototype.findOne = ${Grid.prototype.findOne
@@ -13,19 +14,20 @@ const connection = mongoose.connection;
 
 router.get("/", async (req, res) => {
   if (req.query.email) {
-    var id = "623476a8260862d6afb6ea3a";
+    const user = await User.findOne({ metadata: { user: req.query.email } });
+    var id = user._id;
 
     const gridfsBucket = new mongoose.mongo.GridFSBucket(
       mongoose.connection.db,
       {
-        bucketName: `uploads-${req.query.email}`,
+        bucketName: `student-documents`,
       }
     );
 
     gfs = Grid(connection.db, mongoose.mongo);
 
     gfs
-      .collection(`uploads-${req.query.email}`)
+      .collection(`student-documents`)
       .findOne({ _id: mongodb.ObjectId(id) }, (err, file) => {
         if (err) {
           res.status(404).send("File Not Found!");

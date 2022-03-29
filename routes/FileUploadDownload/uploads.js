@@ -22,7 +22,7 @@ const storage = new gridFs.GridFsStorage({
             user: req.body.email,
           },
           filename: filename,
-          bucketName: `uploads-${req.body.email}`,
+          bucketName: `student-documents`,
         };
         resolve(fileInfo);
       });
@@ -38,7 +38,7 @@ router.post("/upload", upload.single("file"), (req, res) => {
   let gfs;
   mongoose.connection.once("open", () => {
     gfs = grid(mongoose.connection.db, mongoose.mongo);
-    gfs.collection(`uploads-${req.body.email}`);
+    gfs.collection(`student-documents`);
   });
   res
     ? res.json({ file: req.file, user: req.body.email })
