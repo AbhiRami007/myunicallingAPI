@@ -1,4 +1,9 @@
 const mongoose = require("mongoose");
+var cors = require("cors");
+const express = require("express");
+var cors = require("cors");
+const app = express();
+const methodOverride = require("method-override");
 const signupUser = require("./routes/User/signUpUser");
 const loginUser = require("./routes/User/loginUser");
 const updateUser = require("./routes/User/updateUser");
@@ -10,22 +15,15 @@ const universityBrochureUpload = require("./routes/FileUploadDownload/university
 const universityBrochureDownload = require("./routes/FileUploadDownload/university-brochure-download");
 const saveUniversity = require("./routes/UniversityDetails/saveUniversities");
 const getUniversity = require("./routes/UniversityDetails/getUniversityDetails");
-var cors = require("cors");
-const express = require("express");
-var cors = require("cors");
-const app = express();
-app.use(cors());
-
-const methodOverride = require("method-override");
-app.use(methodOverride("_method"));
-
-app.set("view engine", "ejs");
 mongoose
   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
-
+app.use(cors());
+app.use(methodOverride("_method"));
+app.set("view engine", "ejs");
 app.use(express.json());
+
 app.use("/login", loginUser);
 app.use("/sign-up", signupUser);
 
