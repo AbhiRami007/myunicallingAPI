@@ -28,6 +28,7 @@ router.post("/", async (req, res) => {
       duration: req.body.duration,
       schedule: req.body.schedule,
       intake: req.body.intake,
+      icon: req.body.icon,
     });
     universityPayload = await universityPayload.save();
     res.status(200).send({

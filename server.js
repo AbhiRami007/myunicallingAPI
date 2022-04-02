@@ -3,6 +3,7 @@ var cors = require("cors");
 const express = require("express");
 var cors = require("cors");
 const app = express();
+require("dotenv").config();
 const methodOverride = require("method-override");
 const signupUser = require("./routes/User/signUpUser");
 const loginUser = require("./routes/User/loginUser");
@@ -36,7 +37,7 @@ app.use("/brochure-upload", universityBrochureUpload);
 app.use("/brochure-download", universityBrochureDownload);
 app.use("/university", saveUniversity);
 app.use("/university-list", getUniversity);
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const port = process.env.PORT;
+app.listen(3000, () => {
   console.log(`MYUNICALLING app listening on port ${port}`);
 });

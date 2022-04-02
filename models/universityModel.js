@@ -31,6 +31,10 @@ const University = mongoose.model(
       type: String,
       required: true,
     },
+    icon: {
+      type: String,
+      required: true,
+    },
   })
 );
 
