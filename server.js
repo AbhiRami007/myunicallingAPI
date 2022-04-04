@@ -16,10 +16,28 @@ const universityBrochureUpload = require("./routes/FileUploadDownload/university
 const universityBrochureDownload = require("./routes/FileUploadDownload/university-brochure-download");
 const saveUniversity = require("./routes/UniversityDetails/saveUniversities");
 const getUniversity = require("./routes/UniversityDetails/getUniversityDetails");
+const verifyEmail = require("./routes/User/verifyEmail");
 mongoose
   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
+
+// const url =
+//   process.env.DB_URI ||
+//   `mongodb+srv://myUniCalling:OdadbivhvT1yBrUG@myunicallingcluster.mjqmv.mongodb.net/myUniCallingDB?retryWrites=true&w=majority`;
+
+// const connectionParams = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// };
+// mongoose
+//   .connect(url, connectionParams)
+//   .then(() => {
+//     console.log("Connected to database ");
+//   })
+//   .catch((err) => {
+//     console.error(`Error connecting to the database. \n${err}`);
+//   });
 app.use(cors());
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
@@ -37,6 +55,7 @@ app.use("/brochure-upload", universityBrochureUpload);
 app.use("/brochure-download", universityBrochureDownload);
 app.use("/university", saveUniversity);
 app.use("/university-list", getUniversity);
+app.use("/users", verifyEmail);
 const port = process.env.PORT;
 app.listen(3000, () => {
   console.log(`MYUNICALLING app listening on port ${port}`);

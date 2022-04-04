@@ -8,7 +8,8 @@ function validateUser(user) {
       "any.required": `Name is required`,
     }),
     email: Joi.string()
-      .regex(/\S+@\S+\.\S+/)
+      .email()
+      .required()
       .messages({ "string.pattern.base": `User email is invalid!` }),
     phone: Joi.number().min(10).required().messages({
       "any.base": `Phone number is required`,
