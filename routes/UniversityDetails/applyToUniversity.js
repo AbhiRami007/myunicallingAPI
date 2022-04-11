@@ -1,29 +1,29 @@
-const { SavedList } = require("../../models/savedListModel");
+const { AppliedList } = require("../../models/AppliedListModel");
 const { University } = require("../../models/universityModel");
 const express = require("express");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  let savedList = await SavedList.find({
+  let appliedList = await AppliedList.find({
     user: req.body.user,
-    isSaved: true,
+    applied: true,
   });
-  let savedPayload;
+  let appliedPayload;
   let university = await University.find({
     university_name: req.body.university_name,
   });
   if (
-    savedList &&
-    savedList.length &&
-    savedList[0].university_name?.includes(university[0].id)
+    appliedList &&
+    appliedList.length &&
+    appliedList[0].university_name?.includes(university[0].id)
   ) {
-    return res.status(409).send("Already Saved!");
+    return res.status(409).send("Already Applied!");
   } else if (
-    savedList &&
-    savedList.length &&
-    !savedList[0].university_name?.includes(university[0].id)
+    appliedList &&
+    appliedList.length &&
+    !appliedList[0].university_name?.includes(university[0].id)
   ) {
-    savedPayload = await SavedList.updateOne(
+    appliedPayload = await AppliedList.updateOne(
       { user: req.body.user },
       {
         $push: {
@@ -32,16 +32,16 @@ router.post("/", async (req, res) => {
       }
     );
   } else {
-    savedPayload = new SavedList({
+    appliedPayload = new AppliedList({
       user: req.body.user,
       university_name: university[0].id,
-      isSaved: true,
+      applied: true,
     });
-    savedPayload = await savedPayload.save();
+    appliedPayload = await appliedPayload.save();
   }
   return res.status(200).send({
     message: "Applied Successfully",
-    university: savedPayload,
+    university: appliedPayload,
   });
 });
 

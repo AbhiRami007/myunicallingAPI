@@ -17,6 +17,8 @@ const universityBrochureDownload = require("./routes/FileUploadDownload/universi
 const saveUniversity = require("./routes/UniversityDetails/saveUniversities");
 const getUniversity = require("./routes/UniversityDetails/getUniversityDetails");
 const verifyEmail = require("./routes/User/verifyEmail");
+const applyToUniversity = require("./routes/UniversityDetails/applyToUniversity");
+const removeUniversity = require("./routes/UniversityDetails/removeSavedUniversity");
 mongoose
   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
   .then(() => console.log("Connected to MongoDB..."))
@@ -45,7 +47,6 @@ app.use(express.json());
 
 app.use("/login", loginUser);
 app.use("/sign-up", signupUser);
-
 app.use("/update-user-details", updateUser);
 app.use("/remove-account", deleteUser);
 app.use("/upload", fileUpload);
@@ -53,9 +54,13 @@ app.use("/file-download", fileDownload);
 app.use("/logo", universityLogo);
 app.use("/brochure-upload", universityBrochureUpload);
 app.use("/brochure-download", universityBrochureDownload);
-app.use("/university", saveUniversity);
 app.use("/university-list", getUniversity);
+app.use("/university-list/:location", getUniversity);
 app.use("/users", verifyEmail);
+app.use("/apply-to-university", applyToUniversity);
+app.use("/save-university", saveUniversity);
+app.use("/remove-from-saved", removeUniversity);
+
 const port = process.env.PORT;
 app.listen(3000, () => {
   console.log(`MYUNICALLING app listening on port ${port}`);

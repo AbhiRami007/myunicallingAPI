@@ -1,5 +1,7 @@
 const { University } = require("../../models/universityModel");
+const { AppliedList } = require("../../models/AppliedListModel");
 const express = require("express");
+const { SavedList } = require("../../models/savedListModel");
 const router = express.Router();
 
 const caseInsensitiveCheck = (string) => {
@@ -40,6 +42,22 @@ router.get("/", async (req, res) => {
             }
           : { university_name: 1 }
       );
+    } else if (req.query.user && req.query.applied) {
+      university = await AppliedList.findOne({
+        user: req.query.user,
+        applied: true,
+      })
+        .populate({ path: "university_name" })
+        .exec();
+      university = university.university_name;
+    } else if (req.query.user && req.query.isSaved) {
+      university = await SavedList.findOne({
+        user: req.query.user,
+        applied: true,
+      })
+        .populate({ path: "university_name" })
+        .exec();
+      university = university.university_name;
     } else {
       university = await University.find().sort(
         req.query.sortOrder == "DESC"
@@ -56,7 +74,7 @@ router.get("/", async (req, res) => {
         university: university,
       });
     }
-    return res.status(400).send({
+    return res.status(404).send({
       message: "No Universities found",
     });
   } catch (error) {
