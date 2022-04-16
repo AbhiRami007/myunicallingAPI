@@ -74,8 +74,9 @@ router.get("/", async (req, res) => {
         university: university,
       });
     }
-    return res.status(404).send({
+    return res.status(200).send({
       message: "No Universities found",
+      university: [],
     });
   } catch (error) {
     res.status(500).send({

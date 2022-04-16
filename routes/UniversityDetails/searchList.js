@@ -11,13 +11,41 @@ router.get("/", async (req, res) => {
   try {
     let university;
 
-    if (req.query.searchItem) {
+    if (req.query.searchItem && req.query.location) {
       const param = await caseInsensitiveCheck(req.query.searchItem);
       const location = await caseInsensitiveCheck(req.query.location);
       university = await University.find({
-        $or: [{ university_name: param }, { course: param }],
+        $or: [
+          { location: param },
+          { university_name: param },
+          { course: param },
+        ],
         location: location,
       }).sort(
+        req.query.sortOrder == "DESC"
+          ? {
+              university_name: -1,
+            }
+          : { university_name: 1 }
+      );
+    } else if (req.query.searchItem && !req.query.location) {
+      const param = await caseInsensitiveCheck(req.query.searchItem);
+
+      university = await University.find({
+        $or: [
+          { location: param },
+          { university_name: param },
+          { course: param },
+        ],
+      }).sort(
+        req.query.sortOrder == "DESC"
+          ? {
+              university_name: -1,
+            }
+          : { university_name: 1 }
+      );
+    } else {
+      university = await University.find().sort(
         req.query.sortOrder == "DESC"
           ? {
               university_name: -1,
