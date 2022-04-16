@@ -3,9 +3,9 @@ const passwordComplexity = require("joi-password-complexity");
 function validateLogin(user) {
   const schema = Joi.object({
     email: Joi.string()
-      .email()
       .required()
-      .messages({ "string.pattern.base": `User email is Required!` }),
+      .regex(/\S+@\S+\.\S+/)
+      .messages({ "string.pattern.base": `User email is invalid!` }),
 
     password: Joi.string().required(),
   });

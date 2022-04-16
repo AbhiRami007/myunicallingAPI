@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
       user.password
     );
     if (!validPassword) {
-      return res.status(401).send({ message: "Invalid Email or Password" });
+      return res.status(401).send({ message: "Invalid Password" });
     }
     if (user && !user.isVerified) {
       let token = Token.findOne({
@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
           "Verify Email",
           `Please verify your identity by following the link ${url}`
         );
-        return res.status(400).send({
+        return res.status(200).send({
           message:
             "An Email is sent to your registered mail id, Please verify to proceed!",
         });
@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
       user: userPayload,
     });
   } catch (error) {
-    return res.status(500).send("Internal server error");
+    return res.status(500).send({ message: "Internal server error" });
   }
 });
 
