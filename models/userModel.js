@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-
+const Schema = mongoose.Schema;
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -29,6 +29,15 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  about: {
+    type: String,
+  },
+  experience: [{}],
+  education: [{}],
+  certifications: [{}],
+  skills: [],
+  projects: [{}],
+  languages: [],
 });
 
 userSchema.methods.generateAuthToken = function () {

@@ -20,6 +20,8 @@ const searchList = require("./routes/UniversityDetails/searchList");
 const verifyEmail = require("./routes/User/verifyEmail");
 const applyToUniversity = require("./routes/UniversityDetails/applyToUniversity");
 const removeUniversity = require("./routes/UniversityDetails/removeSavedUniversity");
+const getUserData = require("./routes/User/userProfile");
+const updateUserData = require("./routes/User/updateUserProfile");
 mongoose
   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
   .then(() => console.log("Connected to MongoDB..."))
@@ -62,6 +64,8 @@ app.use("/users", verifyEmail);
 app.use("/apply-to-university", applyToUniversity);
 app.use("/save-university", saveUniversity);
 app.use("/remove-from-saved", removeUniversity);
+app.use("/user-profile", getUserData);
+app.use("/user-profile-update", updateUserData);
 
 const port = process.env.PORT;
 app.listen(3000, () => {

@@ -26,6 +26,13 @@ function validateUser(user) {
     confirmPassword: Joi.string().required(),
     userRole: Joi.string().required(),
     isVerfied: Joi.boolean().optional(),
+    about: Joi.string().optional(),
+    experience: Joi.array().optional(),
+    education: Joi.array().optional(),
+    certifications: Joi.array().optional(),
+    skills: Joi.array().optional(),
+    projects: Joi.array().optional(),
+    languages: Joi.array().optional(),
   });
 
   return schema.validate(user);

@@ -1,7 +1,5 @@
 const { University } = require("../../models/universityModel");
-const { AppliedList } = require("../../models/AppliedListModel");
 const express = require("express");
-const { SavedList } = require("../../models/savedListModel");
 const router = express.Router();
 
 const caseInsensitiveCheck = (string) => {
