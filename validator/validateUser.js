@@ -7,6 +7,10 @@ function validateUser(user) {
       "any.empty": `Name is required`,
       "any.required": `Name is required`,
     }),
+    firstname: Joi.string().optional(),
+    lastname: Joi.string().optional(),
+    location: Joi.string().optional(),
+    designation: Joi.string().optional(),
     email: Joi.string()
       .email()
       .required()
