@@ -11,6 +11,8 @@ function validateUser(user) {
     lastname: Joi.string().optional(),
     location: Joi.string().optional(),
     designation: Joi.string().optional(),
+    latest_education: Joi.string().optional(),
+    latest_experience: Joi.string().optional(),
     email: Joi.string()
       .email()
       .required()

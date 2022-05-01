@@ -17,6 +17,12 @@ router.put("/", async (req, res) => {
         lastName: req.body.data.lastname,
         location: req.body.data.location,
         designation: req.body.data.designation,
+        latest_education: req.body.data.college_name
+          ? req.body.data.college_name
+          : req.body.college_name,
+        latest_experience: req.body.data.company_name
+          ? req.body.data.company_name
+          : req.body.latest_experience,
         email: userData[0].email,
         phone: userData[0].phone,
         password: userData[0].password,

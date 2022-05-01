@@ -6,6 +6,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  firstname: {
+    String,
+  },
+  lastname: {
+    String,
+  },
+  location: {
+    String,
+  },
+  designation: { String },
+  latest_education: { String },
+  latest_experience: { String },
   email: {
     type: String,
     required: true,
