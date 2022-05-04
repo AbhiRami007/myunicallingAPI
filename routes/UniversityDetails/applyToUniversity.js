@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
     appliedList.length &&
     appliedList[0].university_name?.includes(university[0].id)
   ) {
-    return res.status(409).send("Already Applied!");
+    return res.status(400).send({ message: "Already Applied!" });
   } else if (
     appliedList &&
     appliedList.length &&

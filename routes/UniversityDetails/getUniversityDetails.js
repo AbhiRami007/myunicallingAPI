@@ -1,7 +1,8 @@
 const { University } = require("../../models/universityModel");
 const { AppliedList } = require("../../models/AppliedListModel");
 const express = require("express");
-const { SavedList } = require("../../models/savedListModel");
+const { PreferenceList } = require("../../models/coursePreferencesModel");
+
 const router = express.Router();
 
 const caseInsensitiveCheck = (string) => {
@@ -10,8 +11,30 @@ const caseInsensitiveCheck = (string) => {
 router.get("/", async (req, res) => {
   try {
     let university;
+    let preference = await PreferenceList.find({
+      user: req.query.user,
+    });
 
-    if (req.query.location && !req.query.course) {
+    if (preference.length) {
+      const location = await caseInsensitiveCheck(preference[0].country);
+      const typeOfMainCourse = await caseInsensitiveCheck(
+        preference[0].typeOfMainCourse
+      );
+      const typeOfStudies = await caseInsensitiveCheck(
+        preference[0].typeOfStudies
+      );
+      university = await University.find({
+        location: location,
+        typeOfMainCourse: typeOfMainCourse,
+        typeOfStudies: typeOfStudies,
+      }).sort(
+        req.query.sortOrder == "DESC"
+          ? {
+              university_name: -1,
+            }
+          : { university_name: 1 }
+      );
+    } else if (req.query.location && !req.query.course) {
       const location = await caseInsensitiveCheck(req.query.location);
       university = await University.find({ location: location }).sort(
         req.query.sortOrder == "DESC"

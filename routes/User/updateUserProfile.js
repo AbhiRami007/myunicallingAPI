@@ -5,10 +5,6 @@ const router = express.Router();
 router.put("/", async (req, res) => {
   try {
     const userData = await User.find({ email: req.body.email });
-    // const experienceExists = await User.find({
-    //   experience: req.body.experience,
-    // });
-    // const educationExists = await User.find({ education: req.body.education });
 
     if (userData.length) {
       const userPayload = {
@@ -48,7 +44,7 @@ router.put("/", async (req, res) => {
             },
 
           projects: req.body.projects &&
-            req.body.projects.projectName && {
+            req.body.projects.name && {
               $each: [req.body.projects],
               $position: 0,
             },
