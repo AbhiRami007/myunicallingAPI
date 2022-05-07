@@ -23,6 +23,7 @@ const removeUniversity = require("./routes/UniversityDetails/removeSavedUniversi
 const getUserData = require("./routes/User/userProfile");
 const updateUserData = require("./routes/User/updateUserProfile");
 const coursePreference = require("./routes/UniversityDetails/coursePrefernce");
+const addUniversity = require("./routes/UniversityDetails/addUniversity");
 mongoose
   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
   .then(() => console.log("Connected to MongoDB..."))
@@ -68,6 +69,7 @@ app.use("/remove-from-saved", removeUniversity);
 app.use("/user-profile", getUserData);
 app.use("/user-profile-update", updateUserData);
 app.use("/course-preference", coursePreference);
+app.use("/add-university", addUniversity);
 
 const port = process.env.PORT;
 app.listen(3000, () => {

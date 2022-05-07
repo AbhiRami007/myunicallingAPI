@@ -7,7 +7,7 @@ const savedSchema = new mongoose.Schema({
   },
   university_name: [{ type: Schema.Types.ObjectId, ref: "University" }],
 
-  IsSaved: {
+  isSaved: {
     type: Boolean,
     default: false,
   },

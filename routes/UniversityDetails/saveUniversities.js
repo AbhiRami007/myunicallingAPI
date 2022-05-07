@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
   });
   let savedPayload;
   let university = await University.find({
-    university_name: req.body.university_name,
+    _id: req.body.university_name,
   });
   if (
     savedList &&

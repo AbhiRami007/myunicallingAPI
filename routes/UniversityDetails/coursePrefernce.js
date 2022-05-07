@@ -14,9 +14,9 @@ router.post("/", async (req, res) => {
     typeOfMainCourse: req.body.typeOfMainCourse,
     typeOfStudies: req.body.typeOfStudies,
   });
+  const id = preference[0].id;
   if (preference.length) {
-    savedPayload = await PreferenceList.updateOne({
-      _id: preference._id,
+    savedPayload = await PreferenceList.findByIdAndUpdate(id, {
       savedPayload,
     });
   } else {

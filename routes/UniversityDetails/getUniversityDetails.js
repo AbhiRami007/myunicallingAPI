@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
       user: req.query.user,
     });
 
-    if (preference.length) {
+    if (preference.length && !(req.query.applied || req.query.isSaved)) {
       const location = await caseInsensitiveCheck(preference[0].country);
       const typeOfMainCourse = await caseInsensitiveCheck(
         preference[0].typeOfMainCourse
@@ -23,17 +23,27 @@ router.get("/", async (req, res) => {
       const typeOfStudies = await caseInsensitiveCheck(
         preference[0].typeOfStudies
       );
-      university = await University.find({
-        location: location,
-        typeOfMainCourse: typeOfMainCourse,
-        typeOfStudies: typeOfStudies,
-      }).sort(
-        req.query.sortOrder == "DESC"
-          ? {
-              university_name: -1,
-            }
-          : { university_name: 1 }
-      );
+      university = req.query.others
+        ? await University.find({ location: location }).sort(
+            req.query.sortOrder == "DESC"
+              ? {
+                  university_name: -1,
+                }
+              : { university_name: 1 }
+          )
+        : await University.find({
+            $and: [
+              { typeOfMainCourse: typeOfMainCourse },
+              { typeOfStudies: typeOfStudies },
+              { location: location },
+            ],
+          }).sort(
+            req.query.sortOrder == "DESC"
+              ? {
+                  university_name: -1,
+                }
+              : { university_name: 1 }
+          );
     } else if (req.query.location && !req.query.course) {
       const location = await caseInsensitiveCheck(req.query.location);
       university = await University.find({ location: location }).sort(
@@ -76,7 +86,7 @@ router.get("/", async (req, res) => {
     } else if (req.query.user && req.query.isSaved) {
       university = await SavedList.findOne({
         user: req.query.user,
-        applied: true,
+        isSaved: true,
       })
         .populate({ path: "university_name" })
         .exec();
