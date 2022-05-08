@@ -27,10 +27,7 @@ router.post("/", async (req, res) => {
       isVerified: req.body.isVerified,
     });
     user = await user.save();
-    const token = await new Token({
-      userId: user._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    }).save();
+    const token = await Token.find({ userId: user._id });
     const url = `${process.env.BASE_URL}users/${user._id}/verify/${token.token}`;
     await sendEmail(
       user.email,

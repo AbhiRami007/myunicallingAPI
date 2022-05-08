@@ -92,13 +92,15 @@ router.get("/", async (req, res) => {
         .exec();
       university = university.university_name;
     } else {
-      university = await University.find().sort(
-        req.query.sortOrder == "DESC"
-          ? {
-              university_name: -1,
-            }
-          : { university_name: 1 }
-      );
+      university =
+        !req.query.others &&
+        (await University.find().sort(
+          req.query.sortOrder == "DESC"
+            ? {
+                university_name: -1,
+              }
+            : { university_name: 1 }
+        ));
     }
 
     if (university.length) {

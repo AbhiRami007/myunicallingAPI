@@ -8,10 +8,10 @@ router.get("/:id/verify/:token", async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
     if (!user) return res.status(400).send({ message: "Invalid url!" });
-    const token = await Token.findOne({
+    const token = await new Token({
       userId: user._id,
-      token: req.params.token,
-    });
+      token: crypto.randomBytes(32).toString("hex"),
+    }).save();
     if (!token) return res.status(400).send({ message: "Invalid url!" });
     await User.updateOne({ _id: req.params.id }, { isVerified: true });
     await token.remove();
