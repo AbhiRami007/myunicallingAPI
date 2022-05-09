@@ -22,25 +22,44 @@ router.get("/", async (req, res) => {
       const typeOfStudies = await caseInsensitiveCheck(
         preference[0].typeOfStudies
       );
-      university = await University.find({
-        $or: [
-          { location: param },
-          { university_name: param },
-          { course: param },
-        ],
+      university = req.query.others
+        ? await University.find({
+            $or: [
+              { location: param },
+              { university_name: param },
+              { course: param },
+            ],
+            $and: [
+              { typeOfMainCourse: { $not: typeOfMainCourse } },
+              { typeOfStudies: { $not: typeOfStudies } },
+              { location: location },
+            ],
+          }).sort(
+            req.query.sortOrder == "DESC"
+              ? {
+                  university_name: -1,
+                }
+              : { university_name: 1 }
+          )
+        : await University.find({
+            $or: [
+              { location: param },
+              { university_name: param },
+              { course: param },
+            ],
 
-        $and: [
-          { typeOfMainCourse: typeOfMainCourse },
-          { typeOfStudies: typeOfStudies },
-          { location: location },
-        ],
-      }).sort(
-        req.query.sortOrder == "DESC"
-          ? {
-              university_name: -1,
-            }
-          : { university_name: 1 }
-      );
+            $and: [
+              { typeOfMainCourse: typeOfMainCourse },
+              { typeOfStudies: typeOfStudies },
+              { location: location },
+            ],
+          }).sort(
+            req.query.sortOrder == "DESC"
+              ? {
+                  university_name: -1,
+                }
+              : { university_name: 1 }
+          );
     } else if (req.query.searchItem && req.query.location) {
       const param = await caseInsensitiveCheck(req.query.searchItem);
       const location = await caseInsensitiveCheck(req.query.location);

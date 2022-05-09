@@ -24,7 +24,13 @@ router.get("/", async (req, res) => {
         preference[0].typeOfStudies
       );
       university = req.query.others
-        ? await University.find({ location: location }).sort(
+        ? await University.find({
+            $and: [
+              { typeOfMainCourse: { $not: typeOfMainCourse } },
+              { typeOfStudies: { $not: typeOfStudies } },
+              { location: location },
+            ],
+          }).sort(
             req.query.sortOrder == "DESC"
               ? {
                   university_name: -1,
