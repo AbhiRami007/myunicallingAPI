@@ -44,9 +44,9 @@ const userSchema = new mongoose.Schema({
   about: {
     type: String,
   },
-  experience: [{}],
-  education: [{}],
-  certifications: [{}],
+  experience: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
+  education: [{ type: Schema.Types.ObjectId, ref: "Education" }],
+  certifications: [{ type: Schema.Types.ObjectId, ref: "Certification" }],
   skills: [],
   projects: [{}],
   languages: [],

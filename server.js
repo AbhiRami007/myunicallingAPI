@@ -26,6 +26,10 @@ const coursePreference = require("./routes/UniversityDetails/coursePrefernce");
 const addUniversity = require("./routes/UniversityDetails/addUniversity");
 const updateUserPassword = require("./routes/User/updatePassword");
 const updateUserEmail = require("./routes/User/updateEmail");
+const userEducation = require("./routes/UserProfilePage/education");
+const userExperience = require("./routes/UserProfilePage/experience");
+const userCertificates = require("./routes/UserProfilePage/certification");
+const userProjects = require("./routes/UserProfilePage/project");
 mongoose
   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
   .then(() => console.log("Connected to MongoDB..."))
@@ -74,6 +78,10 @@ app.use("/course-preference", coursePreference);
 app.use("/add-university", addUniversity);
 app.use("/update-password", updateUserPassword);
 app.use("/update-email", updateUserEmail);
+app.use("/education-details", userEducation);
+app.use("/experience-details", userExperience);
+app.use("/certification-details", userCertificates);
+app.use("/project-details", userProjects);
 
 const port = process.env.PORT;
 app.listen(3000, () => {

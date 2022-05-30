@@ -1,5 +1,6 @@
 const { User } = require("../../models/userModel");
-
+const { Applied } = require("../../models/AppliedListModel");
+const { Saved } = require("../../models/savedListModel");
 const { Token } = require("../../models/token");
 const sendEmail = require("../../utils/sendEmail");
 const crypto = require("crypto");
@@ -9,6 +10,8 @@ const router = express.Router();
 
 router.put("/", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
+  let appliedUser = await Applied.findOne({ user: req.body.email });
+  let savedUser = await Saved.findOne({ user: req.body.email });
   if (!user) {
     return res
       .status(409)
@@ -21,6 +24,12 @@ router.put("/", async (req, res) => {
   await User.findByIdAndUpdate(user.id, {
     email: req.body.updatedEmail,
     isVerified: false,
+  });
+  await Applied.findByIdAndUpdate(appliedUser.id, {
+    user: req.body.updatedEmail,
+  });
+  await Saved.findByIdAndUpdate(savedUser.id, {
+    user: req.body.updatedEmail,
   });
   const token = await Token.find({
     userId: user._id,

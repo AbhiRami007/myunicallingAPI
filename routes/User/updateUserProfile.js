@@ -5,7 +5,6 @@ const router = express.Router();
 router.put("/", async (req, res) => {
   try {
     const userData = await User.find({ email: req.body.email });
-
     if (userData.length) {
       const userPayload = {
         name: userData[0].name,
@@ -26,29 +25,23 @@ router.put("/", async (req, res) => {
         isVerified: userData[0].isVerified,
         about: req.body.data.about,
         $push: {
-          experience: req.body.experience &&
-            req.body.experience.company_name && {
-              $each: [req.body.experience],
-              $position: 0,
-            },
+          experience:
+            !userData[0].experience?.includes(req.body.experience) &&
+            req.body.experience,
 
-          education: req.body.education &&
-            req.body.education.college_name && {
-              $each: [req.body.education],
-              $position: 0,
-            },
-          certifications: req.body.certifications &&
-            req.body.certifications.name && {
-              $each: [req.body.certifications],
-              $position: 0,
-            },
+          education:
+            !userData[0].education?.includes(req.body.education) &&
+            req.body.education,
 
-          projects: req.body.projects &&
-            req.body.projects.name && {
-              $each: [req.body.projects],
-              $position: 0,
-            },
+          certifications:
+            !userData[0].certifications?.includes(req.body.certifications) &&
+            req.body.certifications,
+
+          projects:
+            !userData[0].projects?.includes(req.body.projects) &&
+            req.body.projects,
         },
+
         skills: req.body.data.skills
           ? req.body.data.skills
           : userData[0].skills,
