@@ -3,16 +3,17 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+  try{
   let experience = req.body.id
     ? await ExperienceList.findById({
-        id: req.body.id,
+        _id: req.body.id,
       })
     : [];
 
-  if (experience && experience.length) {
+  if (experience) {
     experiencePayload = await ExperienceList.updateOne(
-      { id: req.body.data.id },
-      req.body
+      { _id: req.body.id },
+      req.body.data
     );
   } else {
     experiencePayload = new ExperienceList({
@@ -31,7 +32,7 @@ router.post("/", async (req, res) => {
   return res.status(200).send({
     message: "Experience Added Successfully",
     experience: experiencePayload,
-  });
+  });}catch(e){console.log(e);}
 });
 
 module.exports = router;

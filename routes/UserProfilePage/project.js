@@ -6,14 +6,14 @@ router.post("/", async (req, res) => {
   try {
     let project = req.body.id
       ? await ProjectList.findById({
-          id: req.body.id,
+          _id: req.body.id,
         })
       : [];
 
-    if (project && project.length) {
+    if (project) {
       projectPayload = await ProjectList.updateOne(
-        { id: req.body.data.id },
-        req.body
+        { _id: req.body.id },
+        req.body.data
       );
     } else {
       projectPayload = new ProjectList({

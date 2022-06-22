@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.put("/", async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
-  let appliedUser = await Applied.findOne({ user: req.body.email });
-  let savedUser = await Saved.findOne({ user: req.body.email });
+  let appliedUser = await Applied.find({ user: req.body.email });
+  let savedUser = await Saved.find({ user: req.body.email });
   if (!user) {
     return res
       .status(409)

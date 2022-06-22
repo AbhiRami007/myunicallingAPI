@@ -5,14 +5,14 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   let education = req.body.id
     ? await EducationList.findById({
-        id: req.body.id,
+        _id: req.body.id,
       })
     : [];
 
-  if (education && education.length) {
+  if (education) {
     educationPayload = await EducationList.updateOne(
-      { id: req.body.data.id },
-      req.body
+      { _id: req.body.id },
+      req.body.data
     );
   } else {
     educationPayload = new EducationList({

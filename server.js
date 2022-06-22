@@ -30,27 +30,27 @@ const userEducation = require("./routes/UserProfilePage/education");
 const userExperience = require("./routes/UserProfilePage/experience");
 const userCertificates = require("./routes/UserProfilePage/certification");
 const userProjects = require("./routes/UserProfilePage/project");
-mongoose
-  .connect("mongodb://127.0.0.1:27017/myunicallingDB")
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch((err) => console.error("Could not connect to MongoDB..."));
-
-// const url =
-//   process.env.DB_URI ||
-//   `mongodb+srv://myUniCalling:OdadbivhvT1yBrUG@myunicallingcluster.mjqmv.mongodb.net/myUniCallingDB?retryWrites=true&w=majority`;
-
-// const connectionParams = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// };
 // mongoose
-//   .connect(url, connectionParams)
-//   .then(() => {
-//     console.log("Connected to database ");
-//   })
-//   .catch((err) => {
-//     console.error(`Error connecting to the database. \n${err}`);
-//   });
+//   .connect("mongodb://127.0.0.1:27017/myunicallingDB")
+//   .then(() => console.log("Connected to MongoDB..."))
+//   .catch((err) => console.error("Could not connect to MongoDB..."));
+
+const url =
+  process.env.DB_URI ||
+  `mongodb+srv://myUniCalling:OdadbivhvT1yBrUG@myunicallingcluster.mjqmv.mongodb.net/myUniCallingDB?retryWrites=true&w=majority`;
+
+const connectionParams = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+mongoose
+  .connect(url, connectionParams)
+  .then(() => {
+    console.log("Connected to database ");
+  })
+  .catch((err) => {
+    console.error(`Error connecting to the database. \n${err}`);
+  });
 app.use(cors());
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");

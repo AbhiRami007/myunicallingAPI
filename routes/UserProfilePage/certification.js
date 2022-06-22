@@ -5,14 +5,14 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   let certification = req.body.id
     ? await CertificationList.findById({
-        id: req.body.id,
+        _id: req.body.id,
       })
     : [];
 
-  if (certification && certification.length) {
+  if (certification) {
     certificationPayload = await CertificationList.updateOne(
-      { id: req.body.data.id },
-      req.body
+      { _id: req.body.id },
+      req.body.data
     );
   } else {
     certificationPayload = new CertificationList({
