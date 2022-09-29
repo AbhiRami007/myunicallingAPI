@@ -37,7 +37,7 @@ const userProjects = require("./routes/UserProfilePage/project");
 
 const url =
   process.env.DB_URI ||
-  `mongodb+srv://myUniCalling:abhirami@myunicallingcluster.mjqmv.mongodb.net/myunicalling`;
+  `mongodb+srv://myUniCalling:abhirami@myunicallingcluster.mjqmv.mongodb.net/myUniCallingDB`;
 
 const connectionParams = {
   useNewUrlParser: true,
