@@ -37,11 +37,11 @@ const userProjects = require("./routes/UserProfilePage/project");
 
 const url =
   process.env.DB_URI ||
-  `mongodb+srv://myUniCalling:OdadbivhvT1yBrUG@myunicallingcluster.mjqmv.mongodb.net/myUniCallingDB?retryWrites=true&w=majority`;
+  `mongodb+srv://myUniCalling:abhirami@myunicallingcluster.mjqmv.mongodb.net/myunicalling`;
 
 const connectionParams = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 };
 mongoose
   .connect(url, connectionParams)
